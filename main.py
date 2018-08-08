@@ -1,17 +1,9 @@
-from player import Player
+from game import Game
+from family_printer import family_printer
+from test_families import test_families
 
-def game_loop():
-    # game states
-    state_over = "over"
-    state_welcome = "welcome"
-    state = state_welcome
+game = Game()
 
-    # loop logic
-    while state != state_over:
-        p = Player("john", "steve", "dog")
-        print(p.name)
-        p.partner = "johnny"
-        print(p.partner)
-        state = state_over
+family_printer(test_families["00"])
 
-game_loop()
+# game.game_loop()
