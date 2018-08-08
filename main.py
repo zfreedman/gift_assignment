@@ -4,6 +4,6 @@ from test_families import test_families
 
 game = Game()
 
-family_printer(test_families["00"])
+# family_printer(test_families["00"])
 
-# game.game_loop()
+game.game_loop()
