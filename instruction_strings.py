@@ -22,6 +22,8 @@ INPUT_MEMBER_2 = """Gift: """
 
 INPUT_MEMBER_STOP = """\nType "{}" if you are done inputting family members: """
 
+MATCHUP = """{} gives their {} to {}"""
+
 PROCESS_INFO = """\nFantastic! All family members have been entered.
 What we'll do now is randomize the order of the family members. Then, to simulate
 "random picking", we'll randomize a second list of the same family members. The
@@ -35,6 +37,12 @@ PROCESS_LIST_DISPLAY = """Pick Order: {}\nHat Order: {}\n"""
 
 QUIT = """\nThanks for playing {}\n""".format(player_name)
 
+RESULT_FAILURE = """\nI'm sorry, but there wasn't a possible solution found given
+the maximum number of iterations provided."""
+
+RESULT_SUCCESS = """\nHere is a randomized list of who should give their gifts to who.
+{}"""
+
 WELCOME = """Welcome {}.
 Would you like to run the application?
 To run, type "{}". The application will quit otherwise: """.format(player_name, "{}")
@@ -46,8 +54,11 @@ instructions = {
     "INPUT_MEMBER_1": INPUT_MEMBER_1,
     "INPUT_MEMBER_2": INPUT_MEMBER_2,
     "INPUT_MEMBER_STOP": INPUT_MEMBER_STOP,
+    "MATCHUP": MATCHUP,
     "PROCESS_INFO": PROCESS_INFO,
     "PROCESS_LIST_DISPLAY": PROCESS_LIST_DISPLAY,
+    "RESULT_FAILURE": RESULT_FAILURE,
+    "RESULT_SUCCESS": RESULT_SUCCESS,
     "QUIT": QUIT,
     "WELCOME": WELCOME
 }

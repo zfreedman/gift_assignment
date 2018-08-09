@@ -17,6 +17,7 @@ class Game:
         self.invalid_str = "INVALID"
         self.max_iterations = 100
         self.quit_str = "quit"
+        self.result = None
         self.start_str = "run"
         self.valid_str = "VALID"
         self.state = STATE_START
@@ -86,15 +87,30 @@ class Game:
                 print(self.valid_str if orders_are_valid else self.invalid_str)
                 print(instructions["PROCESS_LIST_DISPLAY"].format(picker_order, hat_order))
 
+        self.result = (orders_are_valid, picker_order, hat_order)
         self.state = STATE_OVER
 
-        return (orders_are_valid, picker_order, hat_order)
+        return self.result
 
     def handle_start(self):
         welcome_input = input(instructions["WELCOME"].format(self.start_str)).lower()
         self.state = STATE_INPUT if welcome_input == self.start_str else STATE_OVER
 
     def handle_quit(self):
+        if self.result[0] == True:
+            matchups = []
+            for i in range(len(self.result[1])):
+                matchups.append(
+                    instructions["MATCHUP"].format(
+                        self.result[1][i],
+                        self.family[self.result[1][i]].gift,
+                        self.result[2][i]
+                    )
+                )
+            print(instructions["RESULT_SUCCESS"].format("\n".join(matchups)))
+        else:
+            print(instructions["RESULT_FAILURE"])
+
         print(instructions["QUIT"])
 
     def input_loop(self):
