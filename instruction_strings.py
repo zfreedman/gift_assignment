@@ -4,11 +4,23 @@ INPUT_INFO = """\nGreat! Here's how family member input works.
 We'll prompt you for a family member's name, their partner's name, and the member's gift.
 We'll continue to do this until you tell us you're done, which you can indicate by typing "{}"."""
 
+INPUT_MAX_ITERATIONS = """\nSome family groupings will not have a possible solution.
+For example, if a couple Abe and Bob are the only 2 at the party, then only their
+names will be in the hat, and therefore neither of them can exchange a gift with ANY
+name in the hat.
+
+This problem could be optimized using an undirected graph to see if ANY solution exists
+prior to running the randomized sorting process, but in order to preserve the simulated
+probability, this function isn't being implemented. Therefore, family cases WITH valid
+solutions may time out. In order to stop the processing in this event, please provide
+a max iterations(attempts) parameter. If one is not provided, we will enforce one by
+default: """
+
 INPUT_MEMBER_0 = """\nName: """
 INPUT_MEMBER_1 = """Partner Name (hit ENTER for no partner): """
 INPUT_MEMBER_2 = """Gift: """
 
-INPUT_STOP = """\nType "{}" if you are done inputting family members: """
+INPUT_MEMBER_STOP = """\nType "{}" if you are done inputting family members: """
 
 PROCESS_INFO = """\nFantastic! All family members have been entered.
 What we'll do now is randomize the order of the family members. Then, to simulate
@@ -29,10 +41,11 @@ To run, type "{}". The application will quit otherwise: """.format(player_name, 
 
 instructions = {
     "INPUT_INFO": INPUT_INFO,
+    "INPUT_MAX_ITERATIONS": INPUT_MAX_ITERATIONS,
     "INPUT_MEMBER_0": INPUT_MEMBER_0,
     "INPUT_MEMBER_1": INPUT_MEMBER_1,
     "INPUT_MEMBER_2": INPUT_MEMBER_2,
-    "INPUT_STOP": INPUT_STOP,
+    "INPUT_MEMBER_STOP": INPUT_MEMBER_STOP,
     "PROCESS_INFO": PROCESS_INFO,
     "PROCESS_LIST_DISPLAY": PROCESS_LIST_DISPLAY,
     "QUIT": QUIT,

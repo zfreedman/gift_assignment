@@ -1,5 +1,6 @@
 from instruction_strings import instructions
 from family_printer import family_printer
+from family_reader import read_family
 from player import Player
 from random import shuffle
 
@@ -13,9 +14,11 @@ class Game:
     def __init__(self):
         self.family = {}
         self.input_done_str = "done"
+        self.invalid_str = "INVALID"
         self.max_iterations = 100
         self.quit_str = "quit"
         self.start_str = "run"
+        self.valid_str = "VALID"
         self.state = STATE_START
 
     def add_member(self, name, partner_name, gift):
@@ -49,11 +52,26 @@ class Game:
         return names
 
     def handle_input(self):
+        #inform
         print(instructions["INPUT_INFO"].format(self.input_done_str))
+        #family member input
         self.input_loop()
+        #max iterations input
+        self.handle_iterations_input()
+        #leave process state
+        self.state = STATE_PROCESS
 
-    def handle_process(self):
-        print(instructions["PROCESS_INFO"])
+    def handle_iterations_input(self):
+        #max iteration input
+        try:
+            max_iterations = int(input(instructions["INPUT_MAX_ITERATIONS"]))
+        except:
+            max_iterations = 100
+        self.max_iterations = max_iterations
+
+    def handle_process(self, log=True):
+        if log:
+            print(instructions["PROCESS_INFO"])
 
         orders_are_valid = False
         count = 0
@@ -61,11 +79,16 @@ class Game:
             picker_order = self.get_random_family_order()
             hat_order = self.get_random_family_order()
             orders_are_valid = self.check_game_order_validity(picker_order, hat_order)
-            print(count)
             count += 1
-            print(instructions["PROCESS_LIST_DISPLAY"].format(picker_order, hat_order))
+
+            if log:
+                print("\n{}".format(count))
+                print(self.valid_str if orders_are_valid else self.invalid_str)
+                print(instructions["PROCESS_LIST_DISPLAY"].format(picker_order, hat_order))
 
         self.state = STATE_OVER
+
+        return (orders_are_valid, picker_order, hat_order)
 
     def handle_start(self):
         welcome_input = input(instructions["WELCOME"].format(self.start_str)).lower()
@@ -75,7 +98,7 @@ class Game:
         print(instructions["QUIT"])
 
     def input_loop(self):
-        while self.state == STATE_INPUT:
+        while True:
             print()
             family_printer(self.family)
 
@@ -87,9 +110,9 @@ class Game:
 
             # check to stop input
             if input(
-                instructions["INPUT_STOP"].format(self.input_done_str)
+                instructions["INPUT_MEMBER_STOP"].format(self.input_done_str)
             ).lower() == self.input_done_str:
-                self.state = STATE_PROCESS
+                break
 
     def print_unique_family_members(self):
         names = self.family.keys()

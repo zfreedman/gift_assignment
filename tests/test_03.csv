@@ -1,0 +1,6 @@
+abe, bob, gift0
+bob, abe, gift1
+charlie, diane, gift2
+diane, charlie, gift3
+evan, , gift4
+True
